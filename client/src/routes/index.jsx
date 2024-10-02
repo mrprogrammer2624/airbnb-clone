@@ -1,4 +1,5 @@
 import { DashboardLayout } from "@/layouts/";
+import { HomePage } from "@/pages";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
 const airbnbCloneRouter = createBrowserRouter(
@@ -12,8 +13,7 @@ const airbnbCloneRouter = createBrowserRouter(
           children: [
             {
               index: true,
-              // element: <MainPage />,
-              element: "<MainPage />",
+              element: <HomePage />,
             },
           ],
         },
