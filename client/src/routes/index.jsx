@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/layouts";
+import { DashboardLayout } from "@/layouts/";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
 const airbnbCloneRouter = createBrowserRouter(

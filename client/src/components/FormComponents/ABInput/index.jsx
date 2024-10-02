@@ -1,47 +1,59 @@
 import clsx from "clsx";
+import { BiDollar } from "react-icons/bi";
 
 export const ABInput = ({
   id,
-  name,
-  type = "text",
-  label,
-  value,
-  onChange,
-  disabled,
   placeholder,
-  errorMessage,
-  parentClassName,
-  labelClassName,
-  rootClassName,
-  ...rest
+  type = "text",
+  disabled,
+  formatPrice,
+  register,
+  required,
+  errors,
 }) => {
   return (
-    <div className={clsx(parentClassName, "relative w-full")}>
-      {label && (
-        <label
-          htmlFor={id}
-          className={clsx(
-            labelClassName,
-            "text-sm font-medium text-gray-300 block mb-2"          )}
-        >
-          {label}
-        </label>
+    <div className="w-full relative">
+      {formatPrice && (
+        <BiDollar
+          size={24}
+          className="text-neutral-700 absolute top-5 left-2"
+        />
       )}
       <input
         id={id}
-        name={name}
         type={type}
-        value={value}
         disabled={disabled}
-        onChange={onChange}
-        placeholder={placeholder}
+        {...register(id, { required })}
         className={clsx(
-          "w-full px-3 py-2 border border-gray-700 rounded-md bg-transparent text-white focus:outline-none focus:ring",
-          rootClassName
+          "peer w-full p-4 pt-6 font-light bg-white border-2 rounded-md outline-none transition",
+          "disabled:opacity-70 disabled:cursor-not-allowed",
+          {
+            "pl-9": formatPrice,
+            "pl-4": !formatPrice,
+            "border-rose-500": errors[id],
+            "border-neutral-300": !errors[id],
+            "focus:border-rose-500": errors[id],
+            "focus:border-black": !errors[id],
+          }
         )}
-        {...rest}
       />
-      {errorMessage && <div>{errorMessage}</div>}
+      <label
+        htmlFor={id}
+        className={clsx(
+          "absolute text-md duration-150 transform -translate-y-3 top-5 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4",
+          {
+            "left-9": formatPrice,
+            "left-4": !formatPrice,
+            "text-rose-500": errors[id],
+            "text-zinc-400": !errors[id],
+          }
+        )}
+      >
+        {placeholder}
+      </label>
+      {errors[id] && (
+        <p className="text-red-500 text-sm mt-1">{errors[id]?.message}</p>
+      )}
     </div>
   );
 };
